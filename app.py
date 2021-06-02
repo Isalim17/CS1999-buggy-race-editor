@@ -23,17 +23,23 @@ def home():
 #------------------------------------------------------------
 @app.route('/new', methods = ['POST', 'GET'])
 def create_buggy():
+
     if request.method == 'GET':
         return render_template("buggy-form.html")
     elif request.method == 'POST':
-        msg=""
+        #msg=f"qty_wheels={qty_wheels}"
         qty_wheels = request.form['qty_wheels']
+        flag_color = request.form['flag_color']
+        if not qty_wheels.isdigit():
+            msg = f"Wrong Input chief, Try Again: {qty_wheels}"
+            return render_template("buggy-form.html", msg = msg)
+    
         try:
             with sql.connect(DATABASE_FILE) as con:
                 cur = con.cursor()
                 cur.execute(
-                    "UPDATE buggies set qty_wheels=? WHERE id=?",
-                    (qty_wheels, DEFAULT_BUGGY_ID)
+                    "UPDATE buggies set qty_wheels=?, flag_color=? WHERE id=?",
+                    (qty_wheels,flag_color, DEFAULT_BUGGY_ID)
                 )
                 con.commit()
                 msg = "Record successfully saved"
@@ -43,6 +49,7 @@ def create_buggy():
         finally:
             con.close()
         return render_template("updated.html", msg = msg)
+
 
 #------------------------------------------------------------
 # a page for displaying the buggy

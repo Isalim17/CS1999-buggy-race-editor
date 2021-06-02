@@ -26,9 +26,11 @@ connection.execute("""
   CREATE TABLE IF NOT EXISTS buggies (
     id                    INTEGER PRIMARY KEY,
     qty_wheels            INTEGER DEFAULT 4,
-    flag_color            VARCHAR(20),
-    flag_color_secondary  VARCHAR(20),
-    flag_pattern          VARCHAR(20)
+    flag_color            VARCHAR(20) DEFAULT white,
+    power_type            VARCHAR(20) DEFAULT petrol,
+    flag_pattern          VARCHAR(20) DEFAULT plain,
+    flag_color_secondary  VARCHAR(20) DEFAULT black,
+    power_units           INTEGER DEFAULT 1, 
   )
 
 """)
@@ -47,5 +49,5 @@ else:
   print("- Found a buggy in the database, nice")
 
 print("- OK, your database is ready")
-
+#con.execute("ALTER TABLE buggies ADD COLUMN power_type VARCHAR(20);")
 connection.close()
