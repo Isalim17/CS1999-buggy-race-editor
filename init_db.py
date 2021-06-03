@@ -30,7 +30,20 @@ connection.execute("""
     power_type            VARCHAR(20) DEFAULT petrol,
     flag_pattern          VARCHAR(20) DEFAULT plain,
     flag_color_secondary  VARCHAR(20) DEFAULT black,
-    power_units           INTEGER DEFAULT 1, 
+    power_units           INTEGER DEFAULT 1,
+    aux_power_type        INTEGER DEFAULT 0,
+    aux_power_units       INTEGER DEFAULT 0,
+    hamster_booster       INTEGER DEFAULT 0,
+    tyres                 VARCHAR(20) DEFAULT knobbly,
+    armour                VARCHAR(20),
+    attack                VARCHAR(20),
+    fireproof             BOOLEAN  false,
+    insulated             BOOLEAN  false,
+    antibiotic            BOOLEAN  false,
+    banging               BOOLEAN  false,
+    algo                  VARCHAR DEFAULT steady
+    
+     
   )
 
 """)

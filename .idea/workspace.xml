@@ -26,7 +26,12 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\imran\CS1999-buggy-race-editor\templates" />
+    </key>
   </component>
   <component name="RunManager" selected="Python.app">
     <configuration name="Update_db" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
