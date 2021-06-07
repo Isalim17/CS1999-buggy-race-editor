@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import sqlite3 as sql
-
+from bs4 import BeautifulSoup
+from urllib.request import urlopen
 # app - The flask application where all the magical things are configured.
 app = Flask(__name__)
 
@@ -8,6 +9,37 @@ app = Flask(__name__)
 DATABASE_FILE = "database.db"
 DEFAULT_BUGGY_ID = "1"
 BUGGY_RACE_SERVER_URL = "https://rhul.buggyrace.net"
+LINK = "https://rhul.buggyrace.net/specs/"
+
+#
+#COST
+#
+def cost_search():
+    page = urlopen(LINK)
+    html_page = page.read().decode("utf-8")
+    soup = BeautifulSoup(html_page, "html.parser")
+    mess = soup.get_text()
+    print(soup.get_text)
+
+
+#
+#DATA
+#
+def data_search():
+    con = sql.connect(DATABASE_FILE)
+    con.row_factory = sql.Row
+    cur = con.cursor()
+    cur.execute("SELECT * FROM buggies WHERE id=? LIMIT 1", (DEFAULT_BUGGY_ID))
+
+    return dict(zip([column[0] for column in cur.description], cur.fetchone())).items()
+
+def get_buggy():
+    con = sql.connect(DATABASE_FILE)
+    con.row_factory = sql.Row
+    cur = con.cursor()
+    cur.execute("SELECT * FROM buggies")
+    record = cur.fetchone();
+    return record
 
 
 # ------------------------------------------------------------
@@ -61,14 +93,7 @@ def home():
 @app.route('/new', methods=['POST', 'GET'])
 def create_buggy():
     if request.method == 'GET':
-
-        con = sql.connect(DATABASE_FILE)
-        con.row_factory = sql.Row
-        cur = con.cursor()
-        cur.execute("SELECT * FROM buggies")
-        record = cur.fetchone();
-
-        return render_template("buggy-form.html", buggy = record)
+        return render_template("buggy-form.html", buggy = get_buggy())
     elif request.method == 'POST':
         msg1 = valid("qty_wheels", "check item")
         msg2 = valid("flag_color", "")
@@ -89,6 +114,24 @@ def create_buggy2():
         msg4 = valid('flag_pattern', "")
 
         return render_template("updated.html", msg1=msg1, msg2=msg2, msg3=msg3, msg4=msg4)
+#
+#
+#
+@app.route('/war', methods=['POST', 'GET'])
+def create_war():
+    if request.method == 'GET':
+        return render_template("buggy-war.html", buggy = get_buggy())
+    elif request.method == 'POST':
+
+        msg1 = valid("armour", "")
+        msg2 = valid('attack', "")
+        msg3 = valid('qty_attacks', "")
+        msg4 = valid('fireproof', "")
+        msg5 = valid('insulated', "")
+        msg6 = valid('antibiotic', "")
+        msg7 = valid('banging', "")
+
+        return render_template("updated.html", msg1=msg1, msg2=msg2, msg3=msg3, msg4=msg4, msg5=msg5, msg6=msg6, msg7=msg7)
 
 # ------------------------------------------------------------
 # a page for displaying the buggy
@@ -123,12 +166,8 @@ def edit_buggy():
 # ------------------------------------------------------------
 @app.route('/json')
 def summary():
-    con = sql.connect(DATABASE_FILE)
-    con.row_factory = sql.Row
-    cur = con.cursor()
-    cur.execute("SELECT * FROM buggies WHERE id=? LIMIT 1", (DEFAULT_BUGGY_ID))
-
-    buggies = dict(zip([column[0] for column in cur.description], cur.fetchone())).items()
+    buggies = data_search()
+    cost_search()
     return jsonify({key: val for key, val in buggies if (val != "" and val is not None)})
 
 

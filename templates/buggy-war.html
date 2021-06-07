@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <h1>Lets get ready for war </h1>
+  
+   <p>
+    {{ msg }}
+  </p>
+
+  
+
+  <form action="/war" method="post">
+
+    <p>
+        <label for="armour">Armour:</label>
+      <select name="armour" id="armour">
+        <option value="none">None</option>
+        <option value="wood">Wood</option>
+        <option value="aluminium">Aluminium</option>
+        <option value="thinsteel">Thinsteel</option>
+        <option value="thicksteel">Thicksteel</option>
+        <option value="titanium">Titanium</option>
+      </select>
+  <br><br>
+    </p>
+
+    <p>
+        <label for="attack">Attack:</label>
+      <select name="attack" id="attack">
+        <option value="spike">Spike</option>
+        <option value="flame">Flame</option>
+        <option value="charge">Charge</option>
+        <option value="biohazard">Biohazard</option
+      </select>
+    <br><br>
+    </p>
+
+    <p>
+      <label for="qty_attacks">Number of Attacks:</label>
+    <input type="text" name="qty_attacks", value ="{{ buggy['qty_attacks'] }}" />
+    </p>
+
+
+    <p>
+      <label for="fireproof">Is the Buggy fireproof??:</label>
+    <input type="text" name="fireproof", value ="{{ buggy['fireproof'] }}" />
+    </p>
+
+    <p>
+      <label for="insulated">Is the Buggy insulated??:</label>
+    <input type="text" name="insulated", value ="{{ buggy['insulated'] }}" />
+    </p>
+
+    <p>
+      <label for="antibiotic">Is the Buggy AntiBiotic??:</label>
+    <input type="text" name="antibiotic", value ="{{ buggy['antibiotic'] }}" />
+    </p>
+
+    <p>
+      <label for="banging">Does the Buggy have Banging tunes??:</label>
+    <input type="text" name="banging", value ="{{ buggy['banging'] }}" />
+    </p>
+     <input type="submit" class="button">
+
+  </form>
+      
+  
+
+  <p>
+    <a href="/" class="button">home</a>
+  </p>
+
+{% endblock %}
