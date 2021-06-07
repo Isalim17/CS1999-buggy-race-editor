@@ -18,8 +18,11 @@ def valid(item, step):
     value = request.form[item]
     if step == "check item":
         if not value.isdigit():
-            msg = f"Wrong Input chief, Try Again: {value}"
-            return msg
+            return f"Wrong Input chief, Try Again: {value}"
+        if item == "qty_wheels":
+            value = int(value)
+            if (value % 2) == 1:
+                return f"Odd Value Detected: {value}"
 
     try:
         with sql.connect(DATABASE_FILE) as con:
@@ -58,26 +61,34 @@ def home():
 @app.route('/new', methods=['POST', 'GET'])
 def create_buggy():
     if request.method == 'GET':
-        return render_template("buggy-form.html")
-    elif request.method == 'POST':
-        # msg=f"qty_wheels={qty_wheels}"
-        msg1 = valid("qty_wheels", "check item")
-        msg2 = valid('flag_color', "")
-        msg3 = valid('power_type', "")
 
-        return render_template("updated.html", msg1=msg1, msg2=msg2, msg3=msg3)
+        con = sql.connect(DATABASE_FILE)
+        con.row_factory = sql.Row
+        cur = con.cursor()
+        cur.execute("SELECT * FROM buggies")
+        record = cur.fetchone();
+
+        return render_template("buggy-form.html", buggy = record)
+    elif request.method == 'POST':
+        msg1 = valid("qty_wheels", "check item")
+        msg2 = valid("flag_color", "")
+        msg3 = valid("power_type", "")
+        msg4 = valid("flag_pattern", "")
+
+        return render_template("updated.html", msg1=msg1, msg2=msg2, msg3=msg3, msg4=msg4)
 
 @app.route('/real', methods=['POST', 'GET'])
 def create_buggy2():
     if request.method == 'GET':
         return render_template("buggy-form-REAL.html")
     elif request.method == 'POST':
-        # msg=f"qty_wheels={qty_wheels}"
+
         msg1 = valid("qty_wheels", "check item")
         msg2 = valid('flag_color', "")
         msg3 = valid('power_type', "")
+        msg4 = valid('flag_pattern', "")
 
-        return render_template("updated.html", msg1=msg1, msg2=msg2, msg3=msg3)
+        return render_template("updated.html", msg1=msg1, msg2=msg2, msg3=msg3, msg4=msg4)
 
 # ------------------------------------------------------------
 # a page for displaying the buggy

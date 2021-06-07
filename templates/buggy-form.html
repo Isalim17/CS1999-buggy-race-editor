@@ -33,7 +33,7 @@
     </p>
 
     <label for="qty_wheels">Number of wheels:</label>
-    <input type="text" name="qty_wheels" />
+    <input type="text" name="qty_wheels", value ="{{ buggy['qty_wheels'] }}" />
     <p>
 
     </p>
@@ -41,9 +41,22 @@
     <label for="flag_color">Pick your Flag:</label>
     <input type="text" name="flag_color" />
     <input type="submit" class="button">
+
     <p>
 
     </p>
+
+    <p>
+      <label for="flag_pattern"> Flag Pattern:</label>
+      <select name="flag_pattern" id="Flag Pattern">
+        <option   selected  value="plain">Plain</option>
+        <option   selected  value="vstripe">Vertical Stripe</option>
+        <option   selected  value="hstripe">Horizontal Stripe</option>
+        <option   selected  value="dstripe">Diagonal Stripe</option>
+        <option   selected  value="checker">Checker</option>
+        <option   selected  value="spot">Spot</option>
+      </select>
+  <br><br>
   </form>
       
   

@@ -26,6 +26,7 @@ connection.execute("""
   CREATE TABLE IF NOT EXISTS buggies (
     id                    INTEGER PRIMARY KEY,
     qty_wheels            INTEGER DEFAULT 4,
+    total_cost            INTEGER DEFAULT 0,
     flag_color            VARCHAR(20) DEFAULT white,
     power_type            VARCHAR(20) DEFAULT petrol,
     flag_pattern          VARCHAR(20) DEFAULT plain,
