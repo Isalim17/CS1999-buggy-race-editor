@@ -67,6 +67,96 @@
     </p>
   </div>
 
+  <div class="task">
+    <h2>1-ADD</h2>
+    <p>
+      For 1-ADD, i started off by adding the rest of the attributes and inputting them into the sql table and onto my buggy form html.
+    </p>
+    <p>
+      it took a while but i got the hang of it and started to do it much more quicker and efficiently.
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>1-VALID</h2>
+    <p>
+      For 1-VALID, it just needed us to do a data validation so i made a seperate function called <code>def valid</code>>, and made an if loop if odd numbers were inputted in the <code> qty_wheels </code>, section then it would return an odd value message.
+    <p>
+      This made the app work better as it would give an error and not record the inputted value of it was an odd number as you can only have a sensible even amount of wheels..
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>1-Style</h2>
+    <p>
+      For 1-Style, I had to go onto the app.css file under the static folder and work and mess about with the different colours to see what id like more and whats suited to the page, so i made a beige background which had the colour hex <code> #F5F5DC </code>, and changed the stripe colour on the side with black.
+    <p>
+      Then i changed the buttons to a red hex, which was <code> #FF0000 </code>.I preffered this colourway and also changed the submit button to a yellow hex as i thought it would make it look more vibrant.
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>2-EDIT</h2>
+    <p>
+      For 2-Edit, we had to edit the record so that when you reload the page it would still shoe the default values.
+    <p>
+    I read the values out of the database with <code> SQL SELECT </code> and i attributed the values with a HTML tag.
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>2-FORM</h2>
+    <p>
+      For 2-Form, i made sure that everything looked in place and in a neat position, so for example when you submit your inputs to make a buggy the next screen would show in order what you have inputted in a list. Then when you go into Reveal your buggy you'll see everything you've inputted onto a table.
+    <p>
+
+    </p>
+    </div>
+
+    <div class="task">
+    <h2>2-COST</h2>
+    <p>
+      For 2-Cost, I had to calculate and save the cost of the buggy i was producing in the make buggy section of the app., you would have to work out and total the cost of the buggy your producing according to the different attributes the buggy is using.
+    <p>
+    This was probably my hardest Phase as i couldnt finish it at a good standard i was really stuck on the fact that i was trying to web scrape all the costs from the specs of the html but it was very difficult too, you'll probably be able to see it where you see my cost function near the top off app.py.
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>2-RULES</h2>
+    <p>
+      For 2-Rules, this is another form of vaildation similar to 2-Form, but i made a validation function and made sure most things inputted were validated aswell.
+    <p>
+    </p>
+    </div>
+
+  <div class="task">
+    <h2>3-ENV</h2>
+    <p>
+      For 3-ENV, I had to go onto My Pycharm community terminal and input some code so that i was able to change the flask from production to development.
+    <p>
+    I used the tech notes to find the <code> pip install python-dotenv </code> and then make a new file and paste <code> FLASK_ENV=development </code>, and saved it then when i reloaded the page, the development changed from Production to Development.
+    </p>
+    </div>
+
+  <div class="task">
+    <h2>3-AUTOFILL</h2>
+    <p>
+      For 3-Autofill, I did it from before by setting all the values at the start to the default values when refreshed, so that the user wouldn't need to input the values again, and also so that the user knows that those are the original values.
+    <p>
+    </p>
+    </div>
+
+  <div class="task">
+    <h2>3-MULTI</h2>
+    <p>
+      For 3-Multi, I was able to modify the app to create a new buggy and also update it, and i also provided a way to switch between the different buggies that i have created created.
+    <p>
+    I used the help of the video to carry on from the table edit and make it to that it makes sense in my work aswell, i had to create a new app route called <code> @app.route('/edit/<buggy_id>') </code>, and whilst following the video for multi i understood what i had to do, as i had to singularly make it make sense in the development of my code aswell.
+    </p>
+    </div>
+
+
 
 <!-- this closes the section: keep it in! -->
 </section>

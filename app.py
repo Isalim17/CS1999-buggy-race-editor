@@ -126,14 +126,14 @@ def create_buggy():
         msg1 = valid("qty_wheels", "check item", buggy_id)
         msg2 = valid("flag_color", "", buggy_id)
         msg3 = valid("power_type", "", buggy_id)
-        msg11 = valid('aux_power_units', "", buggy_id)
-        msg4 = valid("flag_pattern", "", buggy_id)
-        msg8 = valid("flag_color_secondary", "", buggy_id)
-        msg9 = valid("tyres", "", buggy_id)
-        msg10 = valid("qty_tyres", "", buggy_id)
+        msg4 = valid('aux_power_units', "", buggy_id)
+        msg5 = valid("flag_pattern", "", buggy_id)
+        msg6 = valid("flag_color_secondary", "", buggy_id)
+        msg7 = valid("tyres", "", buggy_id)
+        msg8 = valid("qty_tyres", "", buggy_id)
 
-        return render_template("updated.html", msg1=msg1, msg2=msg2, msg3=msg3, msg4=msg4, msg8=msg8, msg9=msg9,
-                               msg10=msg10, msg11=msg11)
+        return render_template("updated.html", msg1=msg1, msg2=msg2, msg3=msg3, msg4=msg4, msg5=msg5, msg6=msg6,
+                               msg7=msg7, msg8=msg8)
 
 
 @app.route('/real', methods=['POST', 'GET'])
@@ -156,17 +156,19 @@ def create_war():
         return render_template("buggy-war.html", buggy=get_buggy())
     elif request.method == 'POST':
 
-        msg1 = valid("armour", "")
-        msg2 = valid('attack', "")
-        msg3 = valid('qty_attacks', "")
-        msg4 = valid('fireproof', "")
-        msg5 = valid('insulated', "")
-        msg6 = valid('antibiotic', "")
-        msg7 = valid('banging', "")
-        msg12 = valid('hamster_booster', "")
+        buggy_id = request.form["id"]
 
-        return render_template("updated.html", msg1=msg1, msg2=msg2, msg3=msg3, msg4=msg4, msg5=msg5, msg6=msg6,
-                               msg7=msg7, msg12=msg12)
+        msg9 = valid("armour", "", buggy_id)
+        msg10 = valid('attack', "",buggy_id)
+        msg11 = valid('qty_attacks', "", buggy_id)
+        msg12 = valid('fireproof', "", buggy_id)
+        msg13 = valid('insulated', "", buggy_id)
+        msg14 = valid('antibiotic', "", buggy_id)
+        msg15 = valid('banging', "", buggy_id)
+        msg16 = valid('hamster_booster', "", buggy_id)
+
+        return render_template("updated.html", msg9=msg9, msg10=msg10, msg11=msg11, msg12=msg12, msg13=msg13, msg14=msg14,
+                               msg15=msg15, msg16=msg16)
 
 
 #
@@ -206,6 +208,18 @@ def edit_buggy(buggy_id):
     cur.execute("SELECT * FROM buggies WHERE id=?", (buggy_id,))
     record = cur.fetchone();
     return render_template("buggy-form.html", buggy=record)
+
+
+
+@app.route('/edit_war/<buggy_id>')
+def edit_war_buggy(buggy_id):
+    print(f"I want to edit buggy #{buggy_id}")
+    con = sql.connect(DATABASE_FILE)
+    con.row_factory = sql.Row
+    cur = con.cursor()
+    cur.execute("SELECT * FROM buggies WHERE id=?", (buggy_id,))
+    record = cur.fetchone();
+    return render_template("buggy-war.html", buggy=record)
 
 
 # ------------------------------------------------------------
