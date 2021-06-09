@@ -4,46 +4,28 @@
 
   <h1>Buggy</h1>
 
-  <table>
-    <tr>
-      <td>ID:</td> <td> {{ buggy['id'] }} </td>
-    </tr>
-    <tr>
-      <td>Engine:</td> <td> {{ buggy['power_type'] }} </td>
-    </tr>
-    <tr>
-      <td>Colour:</td> <td> {{ buggy['flag_color'] }} </td>
-    </tr>
-    <tr>
-      <td>Wheels:</td> <td> {{ buggy['qty_wheels'] }} </td>
-    </tr>
-    <tr>
-      <td>Flag Pattern:</td> <td> {{ buggy['flag_pattern'] }} </td>
-    </tr>
-
-    <p>
-
-    </p>
-
-
-    <tr>
-      <td>ID:</td> <td> {{ buggy['id'] }} </td>
-    </tr>
-    <tr>
-      <td>Engine:</td> <td> {{ buggy['power_type'] }} </td>
-    </tr>
-    <tr>
-      <td>Colour:</td> <td> {{ buggy['flag_color'] }} </td>
-    </tr>
-    <tr>
-      <td>Wheels:</td> <td> {{ buggy['qty_wheels'] }} </td>
-    </tr>
-    <tr>
-      <td>Flag Pattern:</td> <td> {{ buggy['flag_pattern'] }} </td>
-    </tr>
-
-  </table>
-
+   {% for buggy in buggies %}
+    <table>
+      <tr>
+        <td>ID:</td> <td> {{ buggy['id'] }} </td>
+      </tr>
+      <tr>
+        <td>Engine:</td> <td> {{ buggy['power_type'] }} </td>
+      </tr>
+      <tr>
+        <td>Colour:</td> <td> {{ buggy['flag_color'] }} </td>
+      </tr>
+      <tr>
+        <td>Wheels:</td> <td> {{ buggy['qty_wheels'] }} </td>
+      </tr>
+      <tr>
+        <td>Flag Pattern:</td> <td> {{ buggy['flag_pattern'] }} </td>
+      </tr>
+      <tr>
+        <td> <a href = "/edit/{{ buggy['id'] }}"> edit me </a> </td>
+      </tr>
+    </table>
+    {%  endfor %}
   <p>
     <a href="/" class="button">home</a>
   </p>

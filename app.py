@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import sqlite3 as sql
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
+
 # app - The flask application where all the magical things are configured.
 app = Flask(__name__)
 
@@ -11,8 +12,9 @@ DEFAULT_BUGGY_ID = "1"
 BUGGY_RACE_SERVER_URL = "https://rhul.buggyrace.net"
 LINK = "https://rhul.buggyrace.net/specs/"
 
+
 #
-#COST
+# COST
 #
 def cost_search():
     page = urlopen(LINK)
@@ -23,7 +25,7 @@ def cost_search():
 
 
 #
-#DATA
+# DATA
 #
 def data_search():
     con = sql.connect(DATABASE_FILE)
@@ -32,6 +34,7 @@ def data_search():
     cur.execute("SELECT * FROM buggies WHERE id=? LIMIT 1", (DEFAULT_BUGGY_ID))
 
     return dict(zip([column[0] for column in cur.description], cur.fetchone())).items()
+
 
 def get_buggy():
     con = sql.connect(DATABASE_FILE)
@@ -45,8 +48,7 @@ def get_buggy():
 # ------------------------------------------------------------
 # Confirm
 # ------------------------------------------------------------
-def valid(item, step):
-
+def valid(item, step, id):
     value = request.form[item]
     if step == "check item":
         if not value.isdigit():
@@ -63,7 +65,7 @@ def valid(item, step):
 
             cur.execute(
                 f"UPDATE buggies set {item}=? WHERE id=?",
-                (value, DEFAULT_BUGGY_ID)
+                (value, id)
             )
 
             con.commit()
@@ -75,6 +77,29 @@ def valid(item, step):
     finally:
         con.close()
         return f"your {item} is now a {value}"
+
+    #
+    # insert
+    #
+
+
+def insert():
+    try:
+        with sql.connect(DATABASE_FILE) as con:
+
+            cur = con.cursor()
+
+            cur.execute("INSERT INTO buggies (qty_wheels) VALUES (?)", (4,))
+
+            con.commit()
+            msg = "Record successfully saved"
+    except:
+        con.rollback()
+        msg = "error in update operation"
+
+    finally:
+        con.close()
+        return f"your New Buggy"
 
 
 # ------------------------------------------------------------
@@ -93,14 +118,23 @@ def home():
 @app.route('/new', methods=['POST', 'GET'])
 def create_buggy():
     if request.method == 'GET':
-        return render_template("buggy-form.html", buggy = get_buggy())
+        return render_template("buggy-form.html", buggy=get_buggy())
     elif request.method == 'POST':
-        msg1 = valid("qty_wheels", "check item")
-        msg2 = valid("flag_color", "")
-        msg3 = valid("power_type", "")
-        msg4 = valid("flag_pattern", "")
 
-        return render_template("updated.html", msg1=msg1, msg2=msg2, msg3=msg3, msg4=msg4)
+        buggy_id = request.form["id"]
+
+        msg1 = valid("qty_wheels", "check item", buggy_id)
+        msg2 = valid("flag_color", "", buggy_id)
+        msg3 = valid("power_type", "", buggy_id)
+        msg11 = valid('aux_power_units', "", buggy_id)
+        msg4 = valid("flag_pattern", "", buggy_id)
+        msg8 = valid("flag_color_secondary", "", buggy_id)
+        msg9 = valid("tyres", "", buggy_id)
+        msg10 = valid("qty_tyres", "", buggy_id)
+
+        return render_template("updated.html", msg1=msg1, msg2=msg2, msg3=msg3, msg4=msg4, msg8=msg8, msg9=msg9,
+                               msg10=msg10, msg11=msg11)
+
 
 @app.route('/real', methods=['POST', 'GET'])
 def create_buggy2():
@@ -108,19 +142,18 @@ def create_buggy2():
         return render_template("buggy-form-REAL.html")
     elif request.method == 'POST':
 
-        msg1 = valid("qty_wheels", "check item")
-        msg2 = valid('flag_color', "")
-        msg3 = valid('power_type', "")
-        msg4 = valid('flag_pattern', "")
+        msg1 = insert()
 
-        return render_template("updated.html", msg1=msg1, msg2=msg2, msg3=msg3, msg4=msg4)
+        return render_template("updated.html", msg1=msg1)
+
+
 #
 #
 #
 @app.route('/war', methods=['POST', 'GET'])
 def create_war():
     if request.method == 'GET':
-        return render_template("buggy-war.html", buggy = get_buggy())
+        return render_template("buggy-war.html", buggy=get_buggy())
     elif request.method == 'POST':
 
         msg1 = valid("armour", "")
@@ -130,19 +163,21 @@ def create_war():
         msg5 = valid('insulated', "")
         msg6 = valid('antibiotic', "")
         msg7 = valid('banging', "")
+        msg12 = valid('hamster_booster', "")
 
-        return render_template("updated.html", msg1=msg1, msg2=msg2, msg3=msg3, msg4=msg4, msg5=msg5, msg6=msg6, msg7=msg7)
+        return render_template("updated.html", msg1=msg1, msg2=msg2, msg3=msg3, msg4=msg4, msg5=msg5, msg6=msg6,
+                               msg7=msg7, msg12=msg12)
 
 
 #
-#Poster
+# Poster
 #
 @app.route('/poster')
 def poster():
-   return render_template('poster.html')
+    return render_template('poster.html')
+
+
 #
-
-
 
 
 # ------------------------------------------------------------
@@ -154,17 +189,23 @@ def show_buggies():
     con.row_factory = sql.Row
     cur = con.cursor()
     cur.execute("SELECT * FROM buggies")
-    record = cur.fetchone();
-    return render_template("buggy.html", buggy=record)
+    records = cur.fetchall();
+    return render_template("buggy.html", buggies=records)
 
 
 # ------------------------------------------------------------
 # a placeholder page for editing the buggy: you'll need
 # to change this when you tackle task 2-EDIT
 # ------------------------------------------------------------
-@app.route('/edit')
-def edit_buggy():
-    return render_template("buggy-form.html")
+@app.route('/edit/<buggy_id>')
+def edit_buggy(buggy_id):
+    print(f"I want to edit buggy #{buggy_id}")
+    con = sql.connect(DATABASE_FILE)
+    con.row_factory = sql.Row
+    cur = con.cursor()
+    cur.execute("SELECT * FROM buggies WHERE id=?", (buggy_id,))
+    record = cur.fetchone();
+    return render_template("buggy-form.html", buggy=record)
 
 
 # ------------------------------------------------------------
