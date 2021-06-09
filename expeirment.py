@@ -9,7 +9,7 @@ html_page = page.read().decode("utf-8")
 content = BeautifulSoup(html_page,"html.parser")
 
 
-table = content.find('table', {'class': "table table-striped table-bordered table-hover"})
+table = content.find('table', {'class': "table table-striped table-bordered table-hover})
 rows = table.find_all('tr')
 costs = []
 for row in rows:

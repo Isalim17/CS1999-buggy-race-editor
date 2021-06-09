@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+  .cs1999-tasks {
+    border-top: 1px solid black;
+    margin-top: 4em;
+  }
+  .cs1999-tasks .task {
+    margin: 1em;
+    padding: 1em;
+    border: 1px solid black;
+  }
+  .cs1999-tasks .task h2 {
+    border-bottom: 3px solid gray;
+  }
+</style>
+
+<!-- see tech note about the poster:
+      https://rhul-cs-projects.github.io/CS1999-buggy-race-server/                -->
+<!--                                                                              -->
+<!-- anything you want here: make it beautiful! make it appealing! make it clear! -->
+<!-- you can drop images into static/assets if you want... and access them        -->
+<!-- here with <img src="/static/image-filename.png" alt="diagram" />             -->
+<!--                                                                              -->
+<!-- Of course you can edit static/app.css too if you want. It's your webserver,  -->
+<!--                                                                              -->
+<!-- Maybe... delete all these comments too :-)                                   -->
+
+
+<!-- below this point keep this section tag and paste in a <div> for every        -->
+<!-- task you attempted.                                                          -->
+
+<section class="cs1999-tasks">
+
+  <div class="task">
+    <h2>0-GET</h2>
+    <p>
+      I forked the repo on GitHub and then used <code>git clone</code> to make a local copy.
+    </p>
+    <p>
+      Once the repo was on my own machine I was able to commit changes to version control
+      as I went along, and I pushed back up to my GitHub repo at the end of each day.
+      I followed GitHub's instructions and set up a SSH key so I didn't need to enter
+      username and password every time I pushed.
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>0-RUN</h2>
+    <p>
+      I used the Command Prompt and inputted some code so that I was able to access and get the web browser running,.
+    </p>
+    <p>
+      Once the code was inputted into the command prompt to install the <code>requirements.txt</code> file on my pc,
+      i then opened and ran app.py and opened local host on my web browser and there we saw the app starting to run on its default buttons.
+    </p>
+  </div>
+
+  <div class="task">
+    <h2>0-Change</h2>
+    <p>
+      For 0-Change to test to see if my edits were working i went onto the <code>buggy.html</code> and edited the header to <code>"The Most Elite Rapid Buggy Editor"</code> and it worked.
+    </p>
+    <p>
+      That's when i knw that i was in the right place and found out how to start off changing up my app's headers and layout.
+    </p>
+  </div>
+
+
+<!-- this closes the section: keep it in! -->
+</section>
+
+ <p>
+    <a href="/" class="button">home</a>
+  </p>
+
+
+{% endblock %}

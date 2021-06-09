@@ -133,6 +133,18 @@ def create_war():
 
         return render_template("updated.html", msg1=msg1, msg2=msg2, msg3=msg3, msg4=msg4, msg5=msg5, msg6=msg6, msg7=msg7)
 
+
+#
+#Poster
+#
+@app.route('/poster')
+def poster():
+   return render_template('poster.html')
+#
+
+
+
+
 # ------------------------------------------------------------
 # a page for displaying the buggy
 # ------------------------------------------------------------
